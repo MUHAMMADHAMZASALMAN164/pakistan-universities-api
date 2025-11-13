@@ -1,21 +1,10 @@
-# 🇵🇰 Pakistan CPI Inflation Time Series API
+ 🎓 Pakistan Universities Directory API
 
-Provides **historical and forecasted consumer price index (CPI) inflation data** for Pakistan (2000–2023) using verified public sources, with AI-powered forecasts.
+A comprehensive REST API for **Pakistani higher education institutions**, featuring universities across all provinces with details like city, establishment year, and national ranking.
 
-> ⚠️ **Note**: While the [World Bank page](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=PK) currently shows "No data", Pakistan’s official CPI inflation data is published by:
-> - **Pakistan Bureau of Statistics (PBS)**  
-> - **State Bank of Pakistan (SBP)**  
-> - **International Monetary Fund (IMF)**
->
-> This API uses **officially reported annual inflation rates** (2000–2023).
-
-## 🔢 Sample Data (2020–2023)
-| Year | Inflation (%) |
-|------|---------------|
-| 2020 | 10.7          |
-| 2021 | 8.9           |
-| 2022 | 19.9          |
-| 2023 | 29.2          |
+> 🔹 Includes top institutions: **Quaid-e-Azam University**, **LUMS**, **NUST**, **Punjab University**, **University of Karachi**, and more  
+> 🔹 Full CRUD operations (Create, Read, Update, Delete)  
+> 🔹 Built with FastAPI and Pydantic
 
 ## 🚀 Quick Start
 
