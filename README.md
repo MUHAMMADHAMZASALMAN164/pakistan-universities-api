@@ -1,68 +1,24 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
+# 🇵🇰 Pakistan CPI Inflation Time Series API
 
-app = FastAPI(title="🎓 Pakistan Universities API")
+Provides **historical and forecasted consumer price index (CPI) inflation data** for Pakistan (2000–2023) using verified public sources, with AI-powered forecasts.
 
-@app.get("/")
-def home():
-    return {"message": "🎓 Pakistan Universities API is running!", "docs": "/docs"}
+> ⚠️ **Note**: While the [World Bank page](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=PK) currently shows "No data", Pakistan’s official CPI inflation data is published by:
+> - **Pakistan Bureau of Statistics (PBS)**  
+> - **State Bank of Pakistan (SBP)**  
+> - **International Monetary Fund (IMF)**
+>
+> This API uses **officially reported annual inflation rates** (2000–2023).
 
-unis = {}
-next_id = 1
+## 🔢 Sample Data (2020–2023)
+| Year | Inflation (%) |
+|------|---------------|
+| 2020 | 10.7          |
+| 2021 | 8.9           |
+| 2022 | 19.9          |
+| 2023 | 29.2          |
 
-class UniCreate(BaseModel):
-    name: str
-    city: str
-    province: str
-    established: int
-    ranking_national: int
+## 🚀 Quick Start
 
-class Uni(UniCreate):
-    id: int
-
-@app.post("/universities", response_model=Uni, status_code=201)
-def add_university(uni: UniCreate):
-    global next_id
-    new_uni = {**uni.dict(), "id": next_id}
-    unis[next_id] = new_uni
-    next_id += 1
-    return new_uni
-
-@app.get("/universities", response_model=List[Uni])
-def list_universities():
-    return list(unis.values())
-
-@app.get("/universities/{uni_id}", response_model=Uni)
-def get_university(uni_id: int):
-    if uni_id not in unis:
-        raise HTTPException(status_code=404, detail="University not found")
-    return unis[uni_id]
-
-@app.put("/universities/{uni_id}", response_model=Uni)
-def update_university(uni_id: int, uni: UniCreate):
-    if uni_id not in unis:
-        raise HTTPException(status_code=404, detail="University not found")
-    unis[uni_id] = {**uni.dict(), "id": uni_id}
-    return unis[uni_id]
-
-@app.patch("/universities/{uni_id}", response_model=Uni)
-def partial_update_university(
-    uni_id: int,
-    ranking_national: Optional[int] = None,
-    city: Optional[str] = None
-):
-    if uni_id not in unis:
-        raise HTTPException(status_code=404, detail="University not found")
-    if ranking_national is not None:
-        unis[uni_id]["ranking_national"] = ranking_national
-    if city is not None:
-        unis[uni_id]["city"] = city
-    return unis[uni_id]
-
-@app.delete("/universities/{uni_id}", status_code=204)
-def delete_university(uni_id: int):
-    if uni_id not in unis:
-        raise HTTPException(status_code=404, detail="University not found")
-    del unis[uni_id]
-    return
+### Install
+```bash
+pip install "fastapi[all]"
